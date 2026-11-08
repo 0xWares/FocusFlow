@@ -1,6 +1,6 @@
 import express from 'express';
-import { apiRouter } from '../server/routes/api';
-import { connectToDatabase } from '../server/db';
+import { apiRouter } from '../server/routes/api.js';
+import { connectToDatabase } from '../server/db.js';
 
 const app = express();
 

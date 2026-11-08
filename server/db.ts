@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { UserModel } from './models/User';
-import { StudySessionModel } from './models/StudySession';
-import { GoalModel } from './models/Goal';
-import { DailyPlanModel } from './models/DailyPlan';
-import { generateSalt, hashPassword } from './auth';
+import { UserModel } from './models/User.js';
+import { StudySessionModel } from './models/StudySession.js';
+import { GoalModel } from './models/Goal.js';
+import { DailyPlanModel } from './models/DailyPlan.js';
+import { generateSalt, hashPassword } from './auth.js';
 
 let isConnected = false;
 let connectionError: string | null = null;

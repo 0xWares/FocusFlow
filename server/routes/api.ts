@@ -1,11 +1,11 @@
 import { Router, Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { connectToDatabase, getDatabaseStatus } from '../db';
-import { UserModel } from '../models/User';
-import { StudySessionModel } from '../models/StudySession';
-import { GoalModel } from '../models/Goal';
-import { DailyPlanModel } from '../models/DailyPlan';
-import { generateSalt, hashPassword, verifyPassword } from '../auth';
+import { connectToDatabase, getDatabaseStatus } from '../db.js';
+import { UserModel } from '../models/User.js';
+import { StudySessionModel } from '../models/StudySession.js';
+import { GoalModel } from '../models/Goal.js';
+import { DailyPlanModel } from '../models/DailyPlan.js';
+import { generateSalt, hashPassword, verifyPassword } from '../auth.js';
 
 export const apiRouter = Router();
 
