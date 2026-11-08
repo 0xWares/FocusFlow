@@ -1,0 +1,6 @@
+{
+  "name": "FocusFlow",
+  "description": "A structured study session operating system guiding students through Preparation, Performance, and Preservation for deep work.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
