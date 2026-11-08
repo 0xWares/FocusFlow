@@ -5,10 +5,6 @@ import { GoalModel } from './models/Goal';
 import { DailyPlanModel } from './models/DailyPlan';
 import { generateSalt, hashPassword } from './auth';
 
-const MONGODB_URI =
-  process.env.MONGODB_URI ||
-  'mongodb+srv://codermdwares_db_user:4yJgnlinV6MJWcZ5@cluster0.kyfjixo.mongodb.net/FocusFlow';
-
 let isConnected = false;
 let connectionError: string | null = null;
 
@@ -18,8 +14,13 @@ export async function connectToDatabase(): Promise<{ isConnected: boolean; error
   }
 
   try {
+    const mongodbUri = process.env.MONGODB_URI?.trim();
+    if (!mongodbUri) {
+      throw new Error('MONGODB_URI is not configured in the deployment environment.');
+    }
+
     mongoose.set('strictQuery', false);
-    await mongoose.connect(MONGODB_URI, {
+    await mongoose.connect(mongodbUri, {
       dbName: 'FocusFlow',
       serverSelectionTimeoutMS: 8000,
       connectTimeoutMS: 10000,
