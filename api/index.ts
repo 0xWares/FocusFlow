@@ -17,6 +17,7 @@ app.use(async (_req, res, next) => {
   next();
 });
 
-app.use('/api', apiRouter);
+// Vercel strips the /api function prefix before invoking this handler.
+app.use(apiRouter);
 
 export default app;
