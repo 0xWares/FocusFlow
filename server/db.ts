@@ -14,9 +14,16 @@ export async function connectToDatabase(): Promise<{ isConnected: boolean; error
   }
 
   try {
-    const mongodbUri = (
-      process.env.MONGODB_ATLAS_MONGODB_URI || process.env.MONGODB_URI
-    )?.trim();
+    const configuredUris = [
+      process.env.MONGODB_ATLAS_MONGODB_URI,
+      process.env.MONGODB_URI,
+    ];
+    const mongodbUri = configuredUris
+      .map((value) => value?.trim())
+      .find(
+        (value) =>
+          value?.startsWith('mongodb://') || value?.startsWith('mongodb+srv://'),
+      );
     if (!mongodbUri) {
       throw new Error(
         'MongoDB is not configured. Set MONGODB_ATLAS_MONGODB_URI or MONGODB_URI in the deployment environment.',
