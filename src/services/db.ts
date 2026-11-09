@@ -385,6 +385,10 @@ class StorageService {
     return user || this.users[0] || DEFAULT_USER;
   }
 
+  public getCurrentUserId(): string {
+    return this.currentUserId || this.getCurrentUser().id;
+  }
+
   public getUsers(): User[] {
     return [...this.users];
   }
