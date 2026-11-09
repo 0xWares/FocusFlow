@@ -34,8 +34,10 @@ export async function connectToDatabase(): Promise<{ isConnected: boolean; error
     connectionError = null;
     console.log('[MongoDB] Connected successfully to FocusFlow database cluster.');
 
-    // Auto-seed demo records if collection is empty
-    await seedInitialDataIfEmpty();
+    // Seed demo records asynchronously so a successful connection never blocks API requests.
+    void seedInitialDataIfEmpty().catch((seedError) => {
+      console.warn('[MongoDB] Background seed skipped:', seedError);
+    });
 
     return { isConnected: true };
   } catch (err: any) {
