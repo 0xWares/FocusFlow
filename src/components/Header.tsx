@@ -53,6 +53,8 @@ export const Header: React.FC<HeaderProps> = ({
         return 'Overview';
       case 'session':
         return 'Study Session';
+      case 'planner':
+        return 'Plan Tomorrow — Daily Schedule';
       case 'history':
         return 'Sessions History';
       case 'analytics':

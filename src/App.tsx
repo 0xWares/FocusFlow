@@ -15,7 +15,8 @@ import { SessionDetailModal } from './components/history/SessionDetailModal';
 import { AnalyticsView } from './components/analytics/AnalyticsView';
 import { GoalsView } from './components/goals/GoalsView';
 import { SettingsView } from './components/settings/SettingsView';
-import { StudySession } from './types';
+import { PlannerView } from './components/planner/PlannerView';
+import { StudySession, PlannerActivity } from './types';
 import { db } from './services/db';
 import { AuthModal } from './components/auth/AuthModal';
 
@@ -37,7 +38,7 @@ function MainApp() {
         setCurrentTab('session');
       } else if (params.get('tab')) {
         const tab = params.get('tab') as NavigationTab;
-        if (['dashboard', 'session', 'history', 'analytics', 'goals', 'settings'].includes(tab)) {
+        if (['dashboard', 'session', 'planner', 'history', 'analytics', 'goals', 'settings'].includes(tab)) {
           setCurrentTab(tab);
         }
       }
@@ -48,6 +49,30 @@ function MainApp() {
     if (!isSessionActive) {
       initNewSession();
     }
+    setCurrentTab('session');
+  };
+
+  const handleStartPlannedSession = (activity: PlannerActivity) => {
+    const cfg = activity.studySessionConfig;
+    const studyTargets = cfg?.targets?.map((t, idx) => ({
+      id: `tgt_${Date.now()}_${idx}`,
+      title: t.title,
+      priority: t.priority,
+      completed: false,
+    }));
+
+    initNewSession(activity.title, cfg?.subject || activity.title, {
+      linkedActivityId: activity.id,
+      plannedDuration: activity.durationMinutes,
+      timeBlockType: cfg?.timeBlockType || 'pomodoro',
+      intention: cfg?.learningObjective,
+      targets: studyTargets,
+      pomodoroWork: cfg?.pomodoroWork,
+      pomodoroBreak: cfg?.pomodoroBreak,
+      ultradianWork: cfg?.ultradianWork,
+      ultradianBreak: cfg?.ultradianBreak,
+      preferredTechniques: cfg?.preferredTechniques,
+    });
     setCurrentTab('session');
   };
 
@@ -87,11 +112,16 @@ function MainApp() {
               onViewAllSessions={() => setCurrentTab('history')}
               onSelectSessionDetail={session => setSelectedDetailSession(session)}
               onViewGoals={() => setCurrentTab('goals')}
+              onNavigateToPlanner={() => setCurrentTab('planner')}
             />
           )}
 
           {currentTab === 'session' && (
             <NewSessionFlow onSessionSaved={handleSessionSaved} />
+          )}
+
+          {currentTab === 'planner' && (
+            <PlannerView onStartPlannedSession={handleStartPlannedSession} />
           )}
 
           {currentTab === 'history' && <SessionsHistoryView />}

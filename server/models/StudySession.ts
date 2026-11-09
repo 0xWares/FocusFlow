@@ -28,6 +28,7 @@ export interface IStudySession extends Document {
   averageScore: number;
   reflection?: string;
   status: 'completed' | 'abandoned';
+  linkedActivityId?: string;
   createdAt: Date;
   updatedAt: Date;
 }

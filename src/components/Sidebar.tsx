@@ -14,12 +14,13 @@ import {
   Moon,
   Compass,
   X,
+  CalendarCheck,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useSession } from '../context/SessionContext';
 import { ActiveSessionBadge } from './ActiveSessionBadge';
 
-export type NavigationTab = 'dashboard' | 'session' | 'history' | 'analytics' | 'goals' | 'settings';
+export type NavigationTab = 'dashboard' | 'session' | 'planner' | 'history' | 'analytics' | 'goals' | 'settings';
 
 interface SidebarProps {
   currentTab: NavigationTab;
@@ -51,6 +52,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       icon: Timer,
       highlight: isSessionActive,
     },
+    { id: 'planner' as NavigationTab, label: 'Plan Tomorrow', icon: CalendarCheck },
     { id: 'history' as NavigationTab, label: 'Sessions History', icon: History },
     { id: 'analytics' as NavigationTab, label: 'Analytics', icon: BarChart3 },
     { id: 'goals' as NavigationTab, label: 'Goals & Planning', icon: Target },

@@ -18,6 +18,7 @@ import {
   Activity,
   Layers,
   Trash2,
+  CalendarCheck,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { useSession } from '../../context/SessionContext';
@@ -36,6 +37,7 @@ interface DashboardViewProps {
   onViewAllSessions: () => void;
   onSelectSessionDetail: (session: StudySession) => void;
   onViewGoals: () => void;
+  onNavigateToPlanner?: () => void;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -43,6 +45,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onViewAllSessions,
   onSelectSessionDetail,
   onViewGoals,
+  onNavigateToPlanner,
 }) => {
   const { currentUser } = useAuth();
   const { isSessionActive } = useSession();
@@ -150,7 +153,17 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
           </p>
         </div>
 
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex flex-wrap items-center gap-3 shrink-0">
+          {onNavigateToPlanner && (
+            <button
+              onClick={onNavigateToPlanner}
+              className="flex items-center gap-2 px-4 py-3 bg-[#FFFFFF] dark:bg-[#202225] border border-[#E5E5DF] dark:border-[#2C2E33] hover:bg-[#F0F0EB] dark:hover:bg-[#282A30] text-[#1C1D1F] dark:text-[#FBFBF9] text-sm font-semibold rounded-xl shadow-xs transition-colors whitespace-nowrap"
+            >
+              <CalendarCheck className="w-4 h-4 text-[#2D5A46] dark:text-emerald-400" />
+              <span>Plan Tomorrow</span>
+            </button>
+          )}
+
           <button
             onClick={onStartSession}
             className="flex items-center gap-2.5 px-6 py-3 bg-[#2D5A46] hover:bg-[#254B3A] text-white text-sm font-semibold rounded-xl shadow-sm transition-all transform active:scale-98 whitespace-nowrap"
